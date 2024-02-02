@@ -4,17 +4,13 @@ lintplus.add("credo") {
   filename = "%.ex$",
   procedure = {
     command = lintplus.command {
-      "credo", "suggest", "--format", "json", "--read-from-stdin", lintplus.filename
+      "mix", "credo", "", lintplus.filename
     },
     interpreter = lintplus.interpreter {
-      -- The format for these three in Nim is almost exactly the same:
+      -- TODO: fix regex
       hint = "(.-)%((%d+), (%d+)%) Hint: (.+)",
       warning = "(.-)%((%d+), (%d+)%) Warning: (.+)",
       error = "(.-)%((%d+), (%d+)%) Error: (.+)",
-      -- We want to strip annotations like [XDeclaredButNotUsed] from the end:
-      strip = "%s%[%w+%]$",
-      -- Note that info was omitted. This is because all of the severity levels
-      -- are optional, so eg. you don't have to provide an info pattern.
     },
   },
 }
